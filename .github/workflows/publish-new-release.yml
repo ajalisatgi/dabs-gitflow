@@ -15,6 +15,7 @@ permissions:
 jobs:
  deploy-databricks:
     name: "Deploy Databricks Assets to PROD"
+    environment: PROD
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true &&
       (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix/'))
@@ -33,7 +34,7 @@ jobs:
         if: success()
         run: databricks bundle deploy -t prod
         env:
-          DATABRICKS_HOST: ${{ secrets.PROD_DATABRICKS_HOST_URL }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_URL }}
           DATABRICKS_CLIENT_ID: ${{ secrets.DTABRICKS_SP_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_SP_SECRET }}
   

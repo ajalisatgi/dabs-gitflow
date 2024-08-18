@@ -18,6 +18,7 @@ permissions:
 jobs:
   deploy-databricks:
     name: "Deploy Databricks Assets to QA"
+    environment: QA
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,8 +35,8 @@ jobs:
         if: success()
         run: databricks bundle deploy -t qa
         env:
-          DATABRICKS_HOST: ${{ secrets.QA_DATABRICKS_HOST_URL }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DTABRICKS_SP_CLIENT_ID }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_URL }}
+          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_SP_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_SP_SECRET }}
   
   
