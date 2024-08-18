@@ -1,0 +1,44 @@
+resources:
+  jobs:
+    sample_wf_1:
+      name: sample_wf_1
+
+      tasks:
+        - task_key: taskA
+          notebook_task:
+            notebook_path: ../src/notebook_1.ipynb
+          job_cluster_key: test_job_cluster
+        - task_key: taskB
+          depends_on:
+            - task_key: taskA
+          notebook_task:
+            notebook_path: ../src/notebook_2.ipynb
+          job_cluster_key: test_job_cluster
+        - task_key: taskC
+          depends_on:
+            - task_key: taskA
+          notebook_task:
+            notebook_path: ../src/notebook_3.ipynb
+          job_cluster_key: test_job_cluster
+        - task_key: taskD
+          depends_on:
+            - task_key: taskC
+          notebook_task:
+            notebook_path: ../src/notebook_4.ipynb
+          job_cluster_key: test_job_cluster
+      job_clusters:
+        - job_cluster_key: test_job_cluster
+          new_cluster:
+            spark_version: 13.3.x-scala2.12
+            spark_conf:
+              spark.master: local[*, 4]
+              spark.databricks.cluster.profile: singleNode
+            node_type_id: i3.xlarge
+            custom_tags:
+              ResourceClass: SingleNode
+            spark_env_vars:
+              PYSPARK_PYTHON: /databricks/python3/bin/python3
+            enable_elastic_disk: true
+            data_security_mode: SINGLE_USER
+            runtime_engine: STANDARD
+            num_workers: 0

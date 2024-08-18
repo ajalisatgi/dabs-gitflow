@@ -1,0 +1,27 @@
+bundle:
+  name: dabs-gitflow
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-9f8a6c27-413c.cloud.databricks.com/
+
+  qa:
+    workspace:
+      host: https://dbc-b1e2de3a-d59c.cloud.databricks.com/
+      root_path: /Shared/.bundle/${bundle.name}
+    run_as:
+      service_principal_name: 8bb36eb2-78a5-40a2-8962-d974775e2aa4
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-deb2f4d6-4e9e.cloud.databricks.com/
+      root_path: /Shared/.bundle/${bundle.name}
+    run_as:
+      service_principal_name: 8bb36eb2-78a5-40a2-8962-d974775e2aa4
