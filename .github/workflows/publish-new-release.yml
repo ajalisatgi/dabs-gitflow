@@ -25,7 +25,6 @@ jobs:
         if: success()
         uses: actions/checkout@v4
       
-      
       - name: Install Databricks CLI
         if: success()
         uses: databricks/setup-cli@main
@@ -46,13 +45,11 @@ jobs:
         if: success()
         uses: actions/checkout@v4  
         
-
       - name: Extract version from branch name (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/')
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#release/}
-
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Extract version from branch name (for hotfix branches)
@@ -60,7 +57,6 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#hotfix/}
-
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create Release
@@ -80,15 +76,10 @@ jobs:
           ref: develop
           fetch-depth: 0  # Fetch all history for accurate diff
 
-      - name: Checkout main branch
-        uses: actions/checkout@v3
-        with:
-          ref: main
-          fetch-depth: 0  # Fetch all history for accurate diff
-      
       - name: Check for file changes between main and develop
         run: |
-          CHANGED_FILES=$(git diff --name-only main-branch develop)
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main develop)
           if [ -n "$CHANGED_FILES" ]; then
             echo "FILES_CHANGED=true" >> $GITHUB_ENV
           else
@@ -108,8 +99,8 @@ jobs:
             This PR merges the main branch back into develop.
             This ensures that the updates that happened on the release branch are also present on the develop branch.
 
-      - name: Merge main into develop branch  (for hotfix branches)
-        if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
+      - name: Merge main into develop branch (for hotfix branches)
+        if: startsWith(github.event.pull_request.head.ref, 'hotfix/') && env.FILES_CHANGED == 'true'
         uses: thomaseizinger/create-pull-request@1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
