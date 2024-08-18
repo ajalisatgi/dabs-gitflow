@@ -74,18 +74,18 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Check if main is ahead of develop
+      - name: Check for file changes between main and develop
         run: |
-          git fetch origin develop
-          BEHIND=$(git rev-list --left-right --count origin/main...origin/develop | awk '{print $2}')
-          if [ "$BEHIND" -gt 0 ]; then
-            echo "MAIN_AHEAD=true" >> $GITHUB_ENV
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main...origin/develop)
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "FILES_CHANGED=true" >> $GITHUB_ENV
           else
-            echo "MAIN_AHEAD=false" >> $GITHUB_ENV
+            echo "FILES_CHANGED=false" >> $GITHUB_ENV
           fi
 
       - name: Merge main into develop branch (for release branches)
-        if: startsWith(github.event.pull_request.head.ref, 'release/') && env.MAIN_AHEAD == 'true'
+        if: startsWith(github.event.pull_request.head.ref, 'release/') && env.FILES_CHANGED == 'true'
         uses: thomaseizinger/create-pull-request@1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
