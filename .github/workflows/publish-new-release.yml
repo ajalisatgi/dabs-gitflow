@@ -35,7 +35,7 @@ jobs:
         run: databricks bundle deploy -t prod
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_URL }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DTABRICKS_SP_CLIENT_ID }}
+          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_SP_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_SP_SECRET }}
   
  release:
@@ -74,38 +74,38 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Check if main is ahead of dev
+      - name: Check if main is ahead of develop
         run: |
-          git fetch origin dev
-          BEHIND=$(git rev-list --left-right --count origin/main...origin/dev | awk '{print $2}')
+          git fetch origin develop
+          BEHIND=$(git rev-list --left-right --count origin/main...origin/develop | awk '{print $2}')
           if [ "$BEHIND" -gt 0 ]; then
             echo "MAIN_AHEAD=true" >> $GITHUB_ENV
           else
             echo "MAIN_AHEAD=false" >> $GITHUB_ENV
           fi
 
-      - name: Merge master into dev branch (for release branches)
+      - name: Merge main into develop branch (for release branches)
         if: startsWith(github.event.pull_request.head.ref, 'release/') && env.MAIN_AHEAD == 'true'
         uses: thomaseizinger/create-pull-request@1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           head: main
-          base: dev
-          title: Merge master into dev branch
+          base: develop
+          title: Merge main into develop branch
           body: |
-            This PR merges the main branch back into dev.
-            This ensures that the updates that happened on the release branch are also present on the dev branch.
+            This PR merges the main branch back into develop.
+            This ensures that the updates that happened on the release branch are also present on the develop branch.
 
-      - name: Merge master into dev branch  (for hotfix branches)
+      - name: Merge main into develop branch  (for hotfix branches)
         if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
         uses: thomaseizinger/create-pull-request@1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           head: main
-          base: dev
-          title: Merge master into dev branch
+          base: develop
+          title: Merge main into develop branch
           body: |
-            This PR merges the main branch back into dev.
-            This ensures that the updates that happened on the hotfix branch are also present on the dev branch.
+            This PR merges the main branch back into develop.
+            This ensures that the updates that happened on the hotfix branch are also present on the develop branch.
