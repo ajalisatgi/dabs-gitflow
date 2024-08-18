@@ -74,11 +74,21 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Checkout develop branch
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0  # Fetch all history for accurate diff
+
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0  # Fetch all history for accurate diff
+      
       - name: Check for file changes between main and develop
         run: |
-          git fetch origin main
-          git fetch origin develop
-          CHANGED_FILES=$(git diff --name-only origin/main...origin/develop)
+          CHANGED_FILES=$(git diff --name-only main-branch develop)
           if [ -n "$CHANGED_FILES" ]; then
             echo "FILES_CHANGED=true" >> $GITHUB_ENV
           else
