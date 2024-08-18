@@ -77,6 +77,7 @@ jobs:
       - name: Check for file changes between main and develop
         run: |
           git fetch origin main
+          git fetch origin develop
           CHANGED_FILES=$(git diff --name-only origin/main...origin/develop)
           if [ -n "$CHANGED_FILES" ]; then
             echo "FILES_CHANGED=true" >> $GITHUB_ENV
