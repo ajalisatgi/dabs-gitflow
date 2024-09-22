@@ -6,6 +6,7 @@ This project can be used to bootstrap Databricks deployments that require the im
 
 The following image represents the end-to-end implementation of the GitFlow branching model for deploying Databricks deployments.
 ![](2022-12-21-00-39-09.png)
+![image](https://github.com/user-attachments/assets/ae25ba29-2bb1-4152-8259-76f4fe1895ae)
 
     
 ## Prerequisites
