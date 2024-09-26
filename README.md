@@ -4,7 +4,7 @@
 
 This project can be used to bootstrap Databricks deployments that require implementing a GitFlow branching model. Databricks Asset Bundles (DABs) package the relevant Databricks assets together and deploy them across different workspaces. GitHub Actions workflows automate the constructs as they apply to the GitFlow branching model and invoke DABs for deployments. 
 
-The following image represents the end-to-end implementation of the GitFlow branching model for deploying Databricks deployments.
+The following image represents the end-to-end implementation of the GitFlow branching model for managing Databricks deployments.
 ![image](https://github.com/user-attachments/assets/ae25ba29-2bb1-4152-8259-76f4fe1895ae)
 
     
