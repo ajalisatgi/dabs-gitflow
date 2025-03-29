@@ -9,19 +9,19 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://dbc-f0a023a9-61c6.cloud.databricks.com/
+      host: https://dbc-7aab3432-a1cf.cloud.databricks.com/
 
   qa:
     workspace:
-      host: https://dbc-05842140-fd69.cloud.databricks.com/
+      host: https://dbc-501e8015-f17b.cloud.databricks.com/
       root_path: /Shared/.bundle/${bundle.name}
     run_as:
-      service_principal_name: 5e636acb-4ddb-4da6-a2f9-1dbb3826a0f5
+      service_principal_name: c3e39d6d-e84d-4002-8503-ec2b3391a9f1
 
   prod:
     mode: production
     workspace:
-      host: https://dbc-2279b78a-24d9.cloud.databricks.com/
+      host: https://dbc-3632d5a4-c305.cloud.databricks.com/
       root_path: /Shared/.bundle/${bundle.name}
     run_as:
-      service_principal_name: e7943b5e-6287-46bd-8311-fd085fa75e37
+      service_principal_name: bb47418f-054d-4806-ab96-94423d6337ab
