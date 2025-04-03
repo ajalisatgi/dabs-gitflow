@@ -10,6 +10,7 @@ targets:
     default: true
     workspace:
       host: https://dbc-7aab3432-a1cf.cloud.databricks.com/
+      root_path: ~/bundle/${bundle.name}
 
   qa:
     workspace:
