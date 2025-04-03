@@ -6,25 +6,25 @@ resources:
       tasks:
         - task_key: taskA
           notebook_task:
-            notebook_path: ../src/notebook_1.ipynb
+            notebook_path: ../src/notebook_1.py
           job_cluster_key: test_job_cluster
         - task_key: taskB
           depends_on:
             - task_key: taskA
           notebook_task:
-            notebook_path: ../src/notebook_2.ipynb
+            notebook_path: ../src/notebook_2.py
           job_cluster_key: test_job_cluster
         - task_key: taskC
           depends_on:
             - task_key: taskA
           notebook_task:
-            notebook_path: ../src/notebook_3.ipynb
+            notebook_path: ../src/notebook_3.py
           job_cluster_key: test_job_cluster
         - task_key: taskD
           depends_on:
             - task_key: taskC
           notebook_task:
-            notebook_path: ../src/notebook_4.ipynb
+            notebook_path: ../src/notebook_4.py
           job_cluster_key: test_job_cluster
       job_clusters:
         - job_cluster_key: test_job_cluster
